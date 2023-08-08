@@ -1,0 +1,28 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+@if (User.IsInRole("Admin"))
+{
+    @if (TempData["AlertSuccess"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @Html.Raw(@TempData["AlertSuccess"])
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <h1>This is Administrator Home Page</h1>
+}
+else
+{
+    <h1>This is User Home Page</h1>
+}
