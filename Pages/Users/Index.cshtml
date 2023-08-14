@@ -8,32 +8,34 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">User name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Model)
-            {
-                <tr>
-                    <td>@item.UserName</td>
-                    <td>@item.Email</td>
-                    <td>
-                        @foreach (var role in item.Roles)
-                        {
-                            @role
-                        }
-                    </td>
-                    <td>
-                        <a asp-page="/Users/Delete" asp-route-ID="@item.Id" >Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="container">
+            <table class="table table-striped">
+			<thead class="sticky-top">
+                    <tr>
+                            <th>User name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Model)
+                    {
+                        <tr>
+                                <td>@item.UserName</td>
+                                <td>@item.Email</td>
+                                <td>
+                                @foreach (var role in item.Roles)
+                                {
+                                    @role
+                                }
+                            </td>
+                                <td>
+                                <a asp-page="/Users/Delete" asp-route-ID="@item.Id" >Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
 }
