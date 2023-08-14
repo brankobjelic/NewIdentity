@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using NewIdentityApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace NewIdentityApp.Areas.Identity.Pages.Account
 {
@@ -22,11 +23,12 @@ namespace NewIdentityApp.Areas.Identity.Pages.Account
     {
         private readonly ApplicationSignInManager _signInManager;
         private readonly ILogger<LoginModel> _logger;
-
-        public LoginModel(ApplicationSignInManager signInManager, ILogger<LoginModel> logger)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public LoginModel(ApplicationSignInManager signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -117,7 +119,12 @@ namespace NewIdentityApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+					var user = await _userManager.Users.FirstOrDefaultAsync(x => x.NormalizedUserName == Input.UserName);
+
+					if(await _userManager.IsInRoleAsync(user, "Admin")){
+                        return LocalRedirect("~/Users");
+                    }
+					return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
