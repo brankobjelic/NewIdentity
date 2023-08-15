@@ -28,10 +28,10 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-page="/Users/Index">Users</a>
+                                <a class="btn btn-sm btn-outline-primary fw-bold" asp-area="" asp-page="/Users/Index">Users</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register new user</a>
+                                <a class="btn btn-sm btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Register">Register new user</a>
                             </li>
                         }
                     </ul>
