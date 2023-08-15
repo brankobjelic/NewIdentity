@@ -14,7 +14,6 @@
                     <tr>
                             <th>User name</th>
                             <th>Email</th>
-                            <th>Role</th>
                             <th>Action</th>
                     </tr>
                 </thead>
@@ -25,13 +24,9 @@
                                 <td>@item.UserName</td>
                                 <td>@item.Email</td>
                                 <td>
-                                @foreach (var role in item.Roles)
-                                {
-                                    @role
-                                }
-                            </td>
-                                <td>
-                                <a asp-page="/Users/Delete" asp-route-ID="@item.Id" >Delete</a>
+                                <a asp-page="/Users/Delete" asp-route-ID="@item.Id" >
+                                    Delete
+                                </a>
                             </td>
                         </tr>
                     }
