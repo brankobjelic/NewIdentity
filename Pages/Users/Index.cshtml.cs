@@ -22,7 +22,7 @@ namespace NewIdentityApp.Pages.Users
         public IList<UserRolesViewModel> Model { get; set; } = new List<UserRolesViewModel>();
         public async Task<IActionResult> OnGetAsync()
         {
-            var users = await _userManager.Users.Where(x => x.IsEnabled == true).ToListAsync();
+            var users = await _userManager.Users.Where(x => x.IsEnabled).OrderBy(x => x.UserName).ToListAsync();
 
             foreach (ApplicationUser user in users)
             {
@@ -33,8 +33,10 @@ namespace NewIdentityApp.Pages.Users
                     Email = user.Email,
                     Roles = await _userManager.GetRolesAsync(user)
                 };
-
-                Model.Add(urv);
+                if (urv.Roles.Contains("User"))
+                {
+                    Model.Add(urv);
+                }
             }
             return Page();
         }
