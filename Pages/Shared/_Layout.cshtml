@@ -1,6 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
+@{
+    var usr = await UserManager.GetUserAsync(User);
+    var email = usr?.Email;
+    var name = usr?.UserName;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +26,9 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <div class="navbar-text text-white d-lg-none">
+                    @name (@email)
+                </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 @*                        <li class="nav-item">
@@ -28,13 +37,16 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="btn btn-sm btn-outline-primary fw-bold" asp-area="" asp-page="/Users/Index">Users</a>
+                                <a class="btn btn-sm btn-outline-info fw-bold" asp-area="" asp-page="/Users/Index">Users</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-sm btn-outline-primary fw-bold" asp-area="Identity" asp-page="/Account/Register">Register new user</a>
+                                <a class="btn btn-sm btn-outline-info fw-bold" asp-area="Identity" asp-page="/Account/Register">Register new user</a>
                             </li>
                         }
                     </ul>
+                    <div class="navbar-text text-white me-2 d-none d-lg-block">
+                        @name (@email)
+                    </div>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
