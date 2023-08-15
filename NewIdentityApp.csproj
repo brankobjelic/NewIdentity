@@ -9,6 +9,13 @@
     <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
+	<ItemGroup>
+		<None Update="Pages\Shared\_Layout.cshtml.css" CssScope="custom-scope" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Pages\Shared\_LoginPartial.cshtml.css" CssScope="custom-scope" />
+	</ItemGroup>
+
   <ItemGroup>
     <Compile Remove="Pages\Privacy.cshtml.cs" />
   </ItemGroup>
