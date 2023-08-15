@@ -5,10 +5,11 @@
     ViewData["ActivePage"] = ManageNavPages.ChangePassword;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h1 class="row justify-content-center">@ViewData["Title"]</h1>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <hr />
         <form id="change-password-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
