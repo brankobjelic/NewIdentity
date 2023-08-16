@@ -6,9 +6,9 @@
 <h1>Delete Confirmation</h1>
 
 <div class="alert alert-danger">
-	<h5>Are you sure you want to delete user @Model.AppUser.UserName</h5>
+	<h5>Are you sure you want to delete user @Model.AppUser?.UserName</h5>
 	<form method="post">
-		<button type="submit" class="btn">Yes</button>
-		<a class="btn" asp-page="/Users/Index">No</a>
+		<button type="submit" class="btn" onclick="spinner()">Yes</button>
+		<a class="btn" asp-page="/Users/Index" onclick="spinner()">No</a>
 	</form>
 </div>
