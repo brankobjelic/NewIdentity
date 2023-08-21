@@ -6,9 +6,8 @@ using NewIdentityApp.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var adminEmail = builder.Configuration["Admin:Email"];
-var adminPassword = builder.Configuration["Admin:Password"];
+var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -19,11 +18,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddSignInManager<ApplicationSignInManager>();
 builder.Services.AddRazorPages();
 
-//builder.Services.Configure<RouteOptions>(options =>
-//{
-//    options.LowercaseUrls = true;
-//    options.LowercaseQueryStrings = true;
-//});
 
 var app = builder.Build();
 
@@ -49,7 +43,7 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-using(var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var roles = new[] { "Admin", "User" };
@@ -57,24 +51,6 @@ using(var scope = app.Services.CreateScope())
     {
         if (!await roleManager.RoleExistsAsync(role))
             await roleManager.CreateAsync(new IdentityRole(role));
-    }
-}
-
-using (var scope = app.Services.CreateScope())
-{
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-    string name = "admin";
-    if(await userManager.FindByNameAsync(name) == null)
-    {
-        var user = new ApplicationUser
-        {
-            UserName = name,
-            Email = adminEmail
-        };
-        await userManager.CreateAsync(user, adminPassword);
-
-        await userManager.AddToRoleAsync(user, "Admin");
     }
 }
 
